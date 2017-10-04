@@ -132,13 +132,33 @@ TBitField TBitField::operator~(void) // отрицание
 
 istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
-	
-
+	string str;
+	char c;
+	int counter = 0;
+	istr.get(c);
+	while (c != '\n')
+	{
+		if (c == '1') {
+			bf.SetBit(counter); 
+			counter++;
+		}
+		if (c == '0') {
+			bf.ClrBit(counter);
+			counter++;
+		}
+		istr.get(c);
+	}
 	return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
+	for (int i = 0; i < bf.BitLen - 1; i++)
+		if (bf.GetBit(i) != 0)
+			ostr << "1 ";
+		else ostr << "0 ";
 
+		if (bf.GetBit(bf.BitLen - 1) != '0') ostr << "1";
+		else ostr << "0";
 	return ostr;
 }
